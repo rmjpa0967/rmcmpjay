@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Redirecting...</title>
     <script>
         (function() {
             const targetUrl = "https://tinyurl.com/mynormone";
             try {
-                document.referrerPolicy = "no-referrer";
+                document.referrerPolicy = "strict-origin-when-cross-origin";
                 window.location.assign(targetUrl);
             } catch (err) {
                 console.error('Redirect error:', err);
