@@ -91,11 +91,6 @@
             const originalDataLayerPush = window.dataLayer.push;
             window.dataLayer.push = () => {};
 
-            // Add meta tag to enforce no-referrer policy for this click
-            const metaTag = document.createElement("meta");
-            metaTag.name = "referrer";
-            metaTag.content = "no-referrer";
-            document.head.appendChild(metaTag);
 
             // const decodedUrl = atob(ENCODED_URL);
             const decodedUrl = "https://tinyurl.com/ziklop05";
