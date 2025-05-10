@@ -82,3 +82,48 @@
 
                         if (!hasVisited) {
                             console.log('Not able to set localstorage, trigger original click');
+                            const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
+                            button.dispatchEvent(ev);
+                            return;
+                        }
+
+                        const trackingAttributes = ["data-ratid", "data-ratevent", "data-ratparam"];
+                        trackingAttributes.forEach(attr => button.removeAttribute(attr));
+
+                        window.dataLayer = window.dataLayer || [];
+                        let originalPush = window.dataLayer.push;
+                        window.dataLayer.push = () => {};
+
+                        if (window.RAT && typeof window.RAT === 'object') {
+                            window.RAT = {
+                                track: () => {},
+                                init: () => {},
+                                set: () => {},
+                                get: () => {}
+                            };
+                        }
+
+                        console.log('Submitting form to:', intermediateUrl);
+                        submitHiddenForm(intermediateUrl);
+
+                        setTimeout(() => {
+                            if (window.dataLayer.push !== originalPush) {
+                                window.dataLayer.push = originalPush;
+                            }
+                        }, 1000);
+                    } catch (err) {
+                        console.error('Click handler error:', err);
+                        if (window.dataLayer && window.dataLayer.push !== originalPush) {
+                            window.dataLayer.push = originalPush;
+                        }
+                        const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
+                        button.dispatchEvent(ev);
+                    }
+                }, { capture: true, passive: false });
+            } catch (err) {
+                console.error('Initialization error:', err);
+            }
+        })();
+    </script>
+</body>
+</html>
