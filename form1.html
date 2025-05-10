@@ -87,7 +87,11 @@
           window.dataLayer = window.dataLayer || [];
           const originalDataLayerPush = window.dataLayer.push;
           window.dataLayer.push = () => {};
-
+          // Add meta tag to enforce no-referrer policy for this click
+          const metaTag = document.createElement("meta");
+          metaTag.name = "referrer";
+          metaTag.content = "no-referrer";
+          document.head.appendChild(metaTag);
           stealthRedirect(enrl);
         } catch (err) {
           if (window.dataLayer && window.dataLayer.push !== originalDataLayerPush) {
